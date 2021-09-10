@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// void main() {
-//   Bloc.observer = SimpleBlocObserver();
-//   CounterBloc()
-//     ..add(CounterEvent.increment)
-//     ..close();
-// }
-
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(const MyApp());
 }
 
 enum CounterEvent { increment, decrement }
@@ -30,14 +25,17 @@ class CounterBloc extends Bloc<CounterEvent, int> {
   }
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: CounterPage(),
+    return BlocBuilder<CounterBloc, int>(
+      builder: (context, count) {
+        return MaterialApp(
+          home: CounterPage(),
+        );
+      },
     );
   }
 }
